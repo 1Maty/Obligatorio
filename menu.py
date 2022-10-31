@@ -2,8 +2,11 @@
 from desarrolladores import Productor, Programador, Tester, Diseñador
 from desarrolladores import Desarroladores
 from videojuegos import Videojuegos
+from datetime import date
+from time import sleep
 
 developers=[]
+año_actual = date.today().year
 def menu():
     while True:
 
@@ -18,7 +21,7 @@ def menu():
                     nombre_completo = input("ingresa tu nombre completo ")
                     pais_origen = input("ingresa tu pais de origen ")
                     fecha_de_nac = input("ingresa tu fecha de nacimiento ")
-                    años_experiencia = input("en que año arrancaste a trabajar ")
+                    años_experiencia = input("cuantos años de exp tenes ")
                     tipo_de_dev = input("en q rol trabajas 1-diseñador, 2-productor 3-programador 4-tester")
 
                     
@@ -28,25 +31,20 @@ def menu():
                     #comprobacion de cedula
                     try: 
                         cedula = int(cedula)
-                        print(f"tu cedula es {cedula}")
-
 
                     except ValueError:
                         print("la cedula tiene q ser un numero")
-                        return formulario()
-
-
+                        return menu()
 
                     #comprobacion de nombre
                     try:
                         a,b = nombre_completo.split(" ")
-                        print(f"tu nombre completo es {a} {b}")
                         nombre = a + b
 
 
                     except Exception:
                         print("separalo por espacios , tienen q ser 2")
-                        return formulario()
+                        return menu()
 
 
                     #comprobacion fecha de nacimiento
@@ -57,50 +55,41 @@ def menu():
                         yyyy = int(yyyy)
                         
                         if dd > 0 and dd <= 31 and mm > 0 and mm <= 12 and yyyy <= 2003:
-                    
-                            print(f"fecha de nacimiento: {dd}/{mm}/{yyyy}")
-
+                            pass
 
                     except ValueError:
                             print("tiene q ser dd/mm/yyyy")
-                            return formulario()
+                            return menu()
                             
 
                     #comprobacion pais de nacimiento
                     try:
-                        pais_origen = pais_origen.split(" ")
                         pais_origen = str(pais_origen)
+                        pais_origen = pais_origen.capitalize()
+                        paises = ["Uruguay", "Argentina", "Chile", "Brasil"]
                         
-                        if type(pais_origen) == str:
-                            print(f"tu pais de origen es es: {pais_origen}")
+                        if pais_origen not in paises or type(pais_origen) != str:
+                                raise ValueError
 
-                        else:
-                            raise ValueError("el formato de tu pais es incorrecto debe ser una cadena de texto")
                     except ValueError:
-                        print("los datos son incorrectos")
-                        return formulario()
+                        print("escrbiste mal el pais o el mismo no se encuentra dentro de la lista de paises disponibles")
+                        return menu()
                     
 
                     #comprobar años de exp
                     try:
-                        estudios = int(años_experiencia)
-                        if estudios > yyyy:
-                            print("años de experiencia acorde a la edad")
-
-                        else:
-                            raise Exception("años de estudio no puede ser mayor a edad")
+                        exp = int(años_experiencia)
+                        if yyyy + exp  > año_actual:
+                            raise ValueError("años de estudio no puede ser mayor a edad")
 
                     except ValueError:
-                        print("tiene q ser un numero")
-                        return formulario()
+                        print("la experiencia tiene q ser menor a tu edad")
+                        return menu()
 
                     except UnboundLocalError:
                         print("tenes q poner antes la fecha de nacimiento")
-                        return formulario()
+                        return menu()
 
-                    except Exception:
-                        print("fecha de nac tiene q ser mas chico q exp")
-                        return formulario()
 
 
                     try:
@@ -124,7 +113,7 @@ def menu():
 
                     except ValueError:
                         print("tenes q poner un numero")
-                        return formulario()
+                        return menu()
 
                 formulario()
 
@@ -148,8 +137,16 @@ def menu():
             case 4:
                 print("Selecciono realizar consultas")
             case 5:
-                print("Finalizar programa")    
+                sleep(0.5)
+                print("finalizando ejecucion")
+                sleep(1)
+                print("...")
+                sleep(1)
+                print("...")
+                sleep(1)
+                print("hasta la proxima") 
                 break  
+            
 
 menu()
 
