@@ -1,44 +1,48 @@
 class Desarroladores():
     def __init__(self, cedula, name, pais_origen, nacimiento, experiencia):
-        self.cedula = cedula
-        self.name = name
-        self.pais_origen = pais_origen
-        self.nacimiento = nacimiento
-        self.experiencia = experiencia
+        self._cedula = cedula
+        self._name = name
+        self._pais_origen = pais_origen
+        self._nacimiento = nacimiento
+        self._experiencia = experiencia
+
+    @property
+    def nombre(self):
+        return(self._name)
 
 
 class Diseñador(Desarroladores):
     def __init__(self, cedula, name, pais_origen, nacimiento, experiencia):
         super().__init__(cedula, name, pais_origen, nacimiento, experiencia)
-        self.rol = "diseñador"
+        self._rol = "diseñador"
 
         @property
         def rol(self):
-            return self.rol
+            return self._rol
 
 class Programador(Desarroladores):
     def __init__(self, cedula, name, pais_origen, nacimiento, experiencia):
         super().__init__(cedula, name, pais_origen, nacimiento, experiencia)
-        self.rol= "programador"
+        self._rol= "programador"
 
         @property
         def rol(self):
-            return self.rol
+            return self._rol
 
 class Productor(Desarroladores):
     def __init__(self, cedula, name, pais_origen, nacimiento, experiencia):
         super().__init__(cedula, name, pais_origen, nacimiento, experiencia)
-        self.rol = "productor"
+        self._rol = "productor"
 
         @property
         def rol(self):
-            return self.rol
+            return self._rol
 
 class Tester(Desarroladores):
     def __init__(self, cedula, name, pais_origen, nacimiento, experiencia):
         super().__init__(cedula, name, pais_origen, nacimiento, experiencia)
-        self.rol = "tester"
+        self._rol = "tester"
 
         @property
         def rol(self):
-            return self.rol
+            return self._rol
