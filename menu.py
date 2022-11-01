@@ -1,4 +1,5 @@
 
+from multiprocessing.sharedctypes import Value
 from Entities.desarrolladores import Productor, Programador, Tester, Diseñador
 from Entities.desarrolladores import Desarroladores
 from Entities.videojuegos import Videojuegos
@@ -8,6 +9,7 @@ from time import sleep
 juegos=[]
 developers=[]
 año_actual = date.today().year
+
 def menu():
     while True:
 
@@ -33,8 +35,14 @@ def menu():
                     try: 
                         cedula = int(cedula)
 
+                        """
+                        if len(str(cedula)) != 8:
+                            raise ValueError
+                        """
+
+
                     except ValueError:
-                        print("la cedula tiene q ser un numero")
+                        print("la cedula tiene q ser un numero de 8 digitos")
                         return menu()
 
                     #comprobacion de nombre
@@ -50,7 +58,7 @@ def menu():
 
                     #comprobacion fecha de nacimiento
                     try:
-                        dd,mm,yyyy = fecha_de_nac.split("/")
+                        dd,mm,yyyy = fecha_de_nac.split("-")
                         dd = int(dd)
                         mm = int(mm)
                         yyyy = int(yyyy)
@@ -59,7 +67,7 @@ def menu():
                             pass
 
                     except ValueError:
-                            print("tiene q ser dd/mm/yyyy")
+                            print("tiene q ser dd-mm-yyyy")
                             return menu()
                             
 
@@ -127,26 +135,40 @@ def menu():
                 categorias_in=input("Ingrese las categorias del videojuegoo(1: Acción, 2: Aventura, 3: Estrategia, 4: Puzzle, ingresandolo sin comas por ejemplo 123 seria un juego de accion aventura y estrategia:")
                 for numeros in categorias_in:
                     categorias.append(numeros)
+                    
                 while True:
                     cedula_dev=int(input("Ingrese las cedulas completo, cuando haya puesto todas ingrese 0:"))
                     if cedula_dev==0:
+                        developers2 = developers.copy()
                         break
                     cedulas.append(cedula_dev)
                 print(cedulas,categorias)
-                for devs in developers:
-                    for cedula in cedulas:
-                        if devs.cedula==cedula:
-                            roles.append(devs.rol)
-                diseñadores_valido=roles.count("diseñador")>=2
-                productores_valido=roles.count("productor")>=1
-                programadores_valido=roles.count("progamador")>=3
-                tester_valido=roles.count("tester")>=2
-                if diseñadores_valido and productores_valido and programadores_valido and tester_valido:
+
+                # vincula la cedula de cada dev con el rol
+                for devs in developers2:
+                    rol = devs.rol
+                    if devs.cedula in cedulas:
+                        roles.append(rol)
+                        # developers2.remove(devs)
+                    else:
+                        print("alguna cedula no esta registrada en la alta de desarrollador")
+                        
+                print(f"los roles son {roles}")
+                
+
+
+                diseñadores_valido=roles.count("diseñador")
+                productores_valido=roles.count("productor")
+                programadores_valido=roles.count("programador")
+                tester_valido=roles.count("tester")
+
+                if diseñadores_valido >= 2 and productores_valido >= 1 and programadores_valido >= 3 and tester_valido >= 2:
                     nuevo_juego=Videojuegos(nombre,categorias,cedulas)
                     juegos.append(nuevo_juego)
                 else:
                     print("Las condiciones de roles no se cumplieron")
-                                                                                                   
+
+                                                                     
 
 
             case 3:
@@ -171,5 +193,9 @@ menu()
 def pruea():
     for dev in developers:
         print(dev.nombre)
+    
+    Videojuegos.nombre
+    Videojuegos.lista_devs
+    
 
 pruea()
