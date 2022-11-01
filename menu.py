@@ -1,7 +1,7 @@
 
-from desarrolladores import Productor, Programador, Tester, Diseñador
-from desarrolladores import Desarroladores
-from videojuegos import Videojuegos
+from Entities.desarrolladores import Productor, Programador, Tester, Diseñador
+from Entities.desarrolladores import Desarroladores
+from Entities.videojuegos import Videojuegos
 from datetime import date
 from time import sleep
 
@@ -145,6 +145,7 @@ def menu():
                 print("...")
                 sleep(1)
                 print("hasta la proxima") 
+                sleep(0.5)
                 break  
             
 
