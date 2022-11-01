@@ -5,6 +5,7 @@ from Entities.videojuegos import Videojuegos
 from datetime import date
 from time import sleep
 
+juegos=[]
 developers=[]
 año_actual = date.today().year
 def menu():
@@ -120,6 +121,7 @@ def menu():
             case 2:
                 categorias=[]
                 cedulas=[]
+                roles=[]
                 print("Selecciono alta de Videojuego")
                 nombre=input("Ingrese el nombre del juego:")
                 categorias_in=input("Ingrese las categorias del videojuegoo(1: Acción, 2: Aventura, 3: Estrategia, 4: Puzzle, ingresandolo sin comas por ejemplo 123 seria un juego de accion aventura y estrategia:")
@@ -131,6 +133,21 @@ def menu():
                         break
                     cedulas.append(cedula_dev)
                 print(cedulas,categorias)
+                for devs in developers:
+                    for cedula in cedulas:
+                        if devs.cedula==cedula:
+                            roles.append(devs.rol)
+                diseñadores_valido=roles.count("diseñador")>=2
+                productores_valido=roles.count("productor")>=1
+                programadores_valido=roles.count("progamador")>=3
+                tester_valido=roles.count("tester")>=2
+                if diseñadores_valido and productores_valido and programadores_valido and tester_valido:
+                    nuevo_juego=Videojuegos(nombre,categorias,cedulas)
+                    juegos.append(nuevo_juego)
+                else:
+                    print("Las condiciones de roles no se cumplieron")
+                                                                                                   
+
 
             case 3:
                 print("Selecciono simular competencia")
