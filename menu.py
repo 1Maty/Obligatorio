@@ -9,7 +9,7 @@ from time import sleep
 juegos=[]
 developers=[]
 año_actual = date.today().year
-
+devs_en_uso=[]
 def menu():
     while True:
 
@@ -145,11 +145,12 @@ def menu():
                 print(cedulas,categorias)
 
                 # vincula la cedula de cada dev con el rol
-                for devs in developers2:
+                for devs in developers:
                     rol = devs.rol
-                    if devs.cedula in cedulas:
+                    if devs.cedula in cedulas and devs not in devs_en_uso:
                         roles.append(rol)
-                        # developers2.remove(devs)
+                        devs_en_uso.append(devs)
+                        
                     else:
                         print("alguna cedula no esta registrada en la alta de desarrollador")
                         
