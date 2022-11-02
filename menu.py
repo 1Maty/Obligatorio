@@ -131,6 +131,7 @@ def menu():
                 categorias=[]
                 cedulas=[]
                 roles=[]
+                devs_juego=[]
                 print("Selecciono alta de Videojuego")
                 nombre=input("Ingrese el nombre del juego:")
                 categorias_in=input("Ingrese las categorias del videojuegoo(1: Acción, 2: Aventura, 3: Estrategia, 4: Puzzle, ingresandolo sin comas por ejemplo 123 seria un juego de accion aventura y estrategia:")
@@ -140,7 +141,6 @@ def menu():
                 while True:
                     cedula_dev=int(input("Ingrese las cedulas completo, cuando haya puesto todas ingrese 0:"))
                     if cedula_dev==0:
-                        developers2 = developers.copy()
                         break
                     cedulas.append(cedula_dev)
                 print(cedulas,categorias)
@@ -148,10 +148,11 @@ def menu():
                 # vincula la cedula de cada dev con el rol
                 devs_un_uso_copia=devs_en_uso.copy()
                 todas_validas=True
-                for devs in developers2:
+                for devs in developers:
                     rol = devs.rol
                     if devs.cedula in cedulas and devs not in devs_en_uso:
                         roles.append(rol)
+                        devs_juego.append(devs)
                         devs_en_uso.append(devs)
                         
                     else:
@@ -171,11 +172,11 @@ def menu():
                 programadores_valido=roles.count("programador")
                 tester_valido=roles.count("tester")
 
-                if diseñadores_valido >= 2 and productores_valido >= 1 and programadores_valido >= 3 and tester_valido >= 2:
-                    nuevo_juego=Videojuegos(nombre,categorias,cedulas)
+                if diseñadores_valido >= 2 and productores_valido >= 1 and programadores_valido >= 3 and tester_valido >= 2 and todas_validas:
+                    nuevo_juego=Videojuegos(nombre,categorias,devs_juego)
                     juegos.append(nuevo_juego)
                 else:
-                    print("Las condiciones de roles no se cumplieron")
+                    print("Las condiciones de roles no se cumplieron o no alguna de las cedulas no fueron validas")
 
                                                                      
 
@@ -199,6 +200,7 @@ def menu():
                     for juegos_competencia in jueguitos_de_competencia:
                         listas_devs=juegos_competencia.lista_devs
                         for devs in listas_devs:
+
                             if devs.rol=="diseñador":
                                 diseñadores+=1
                             elif devs.rol=="productor":
@@ -225,7 +227,7 @@ def menu():
                             maximo=notas
                             tercer_puesto=[juegos,notas]
                 nueva_competencia=Competencias(categoria,(primer_puesto,segundo_puesto,tercer_puesto)) 
-                      
+
                     
                     
 
