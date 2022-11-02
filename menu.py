@@ -10,6 +10,7 @@ juegos=[]
 developers=[]
 año_actual = date.today().year
 devs_en_uso=[]
+
 def menu():
     while True:
 
@@ -145,7 +146,9 @@ def menu():
                 print(cedulas,categorias)
 
                 # vincula la cedula de cada dev con el rol
-                for devs in developers:
+                devs_un_uso_copia=devs_en_uso.copy()
+                todas_validas=True
+                for devs in developers2:
                     rol = devs.rol
                     if devs.cedula in cedulas and devs not in devs_en_uso:
                         roles.append(rol)
@@ -153,6 +156,11 @@ def menu():
                         
                     else:
                         print("alguna cedula no esta registrada en la alta de desarrollador")
+                        todas_validas=False
+                if not todas_validas:  #por si no todos funcionan :)
+                    devs_en_uso=devs_un_uso_copia
+
+
                         
                 print(f"los roles son {roles}")
                 
@@ -174,6 +182,60 @@ def menu():
 
             case 3:
                 print("Selecciono simular competencia")
+                categoria=input("Ingrese la categoria que desee simular(1-Acción,2-Aventura,3-Estrategia, 4- Puzzle)")
+                jueguitos_de_competencia=[]
+                diseñadores=0
+                productores=0
+                testers=0
+                programadores=0
+                puntajes=[]
+                maximos=0
+                for jueguitos in juegos:
+                    if categoria in jueguitos.categorias:
+                        jueguitos_de_competencia.append(jueguitos)
+                if len(jueguitos_de_competencia)<3:
+                    print("Cantidad insuficiente de juegos con la categoria")
+                else:
+                    for juegos_competencia in jueguitos_de_competencia:
+                        listas_devs=juegos_competencia.lista_devs
+                        for devs in listas_devs:
+                            if devs.rol=="diseñador":
+                                diseñadores+=1
+                            elif devs.rol=="productor":
+                                productores+=1
+                            elif devs.rol=="tester":
+                                testers+=1
+                            elif devs.rol=="programador":
+                                programadores+=1
+                        puntaje=0.2*diseñadores+0.12*productores+0.5*programadores+0.18*testers
+                        puntajes.append[juegos_competencia,puntaje]
+                    for juegos,notas in puntajes:
+                        if notas>maximos:
+                            maximo=notas
+                            primer_puesto=[juegos,notas]
+                    puntajes.remove(primer_puesto)
+                    maximo=0
+                    for juegos,notas in puntajes:
+                        if notas>maximos:
+                            maximo=notas
+                            segundo_puesto=[juegos,notas]
+                    puntajes.remove(segundo_puesto)
+                    for juegos,notas in puntajes:
+                        if notas>maximos:
+                            maximo=notas
+                            tercer_puesto=[juegos,notas]
+                nueva_competencia=Competencias(categoria,(primer_puesto,segundo_puesto,tercer_puesto)) 
+                      
+                    
+                    
+
+
+
+                    
+                               
+
+
+                                
             case 4:
                 print("Selecciono realizar consultas")
             case 5:
