@@ -138,7 +138,7 @@ def menu():
                         print("tenes q poner un numero")
                         return menu()
 
-                formulario()
+                formulario() #reusamos este codigo del practico 9.4
 
             case 2:
                 categorias=[]
@@ -221,7 +221,7 @@ def menu():
                 for jueguitos in juegos:
                     if categoria in jueguitos.categorias:
                         jueguitos_de_competencia.append(jueguitos)
-                if len(jueguitos_de_competencia)!=1:
+                if len(jueguitos_de_competencia) == 0:
                     print("Cantidad insuficiente de juegos con la categoria")
                 else:
                     for juegos_competencia in jueguitos_de_competencia:
@@ -251,44 +251,52 @@ def menu():
                         prom_tester = años_de_exp_tester/testers
                         prom_programador = años_de_exp_programador/programadores
 
-                        puntaje = 0.2*prom_diseñador+ 0.12*prom_productor+ 0.5*prom_programador+ 0.18*prom_tester
+                        puntaje = 0.2*prom_diseñador + 0.12*prom_productor + 0.5*prom_programador + 0.18*prom_tester
 
-                        puntajes.append(puntaje)
+                        puntajes.append(round(puntaje, 3)) #hacerle el round
                         nombre_juegos.append(juegos_competencia.nombre)
 
 
+                    def encontrar_y_sacar():
                         posicion = puntajes.index(max(puntajes))
-
                         primero = [nombre_juegos[posicion], puntajes[posicion]]
-                        print(primero)
+                        puntajes.remove(puntajes[posicion])
+                        nombre_juegos.remove(nombre_juegos[posicion])
+                        return primero
 
 
-                    """
-                    
-                    for juegos,notas in puntajes:
-                        if notas>maximos:
-                            maximo=notas
-                            primer_puesto=[juegos,notas]
-                    puntajes.remove(primer_puesto)
-                    maximo=0
+                    primero = encontrar_y_sacar()
+                    print("El primero es:",primero)
 
-                    for juegos,notas in puntajes:
-                        if notas>maximos:
-                            maximo=notas
-                            segundo_puesto=[juegos,notas]
-                    puntajes.remove(segundo_puesto)
+                    if len(nombre_juegos) != 0:
+                        segundo = encontrar_y_sacar()
+                        print("El segundo es:",segundo)
 
-                    for juegos,notas in puntajes:
-                        if notas>maximos:
-                            maximo=notas
-                            tercer_puesto=[juegos,notas]
-                    nueva_competencia=Competencias(categoria,(primer_puesto,segundo_puesto,tercer_puesto)) 
+                    if len(nombre_juegos) != 0:
+                        tercero = encontrar_y_sacar()
+                        print("El tercero es:",tercero)
 
-                    """
-                
+
                                 
             case 4:
                 print("Selecciono realizar consultas")
+                consulta = int(input("10 mejores devs-1; 5 mejores program-2; los 7 viejos-3; devs uruguayos-4"))
+                
+                match consulta:
+
+                    case 1:
+                        pass
+
+                    case 2:
+                        pass
+
+                    case 3: 
+                        pass
+
+                    case 4:
+                        pass
+
+
             case 5:
                 sleep(0.5)
                 print("finalizando ejecucion")
@@ -304,12 +312,3 @@ def menu():
 
 menu()
 
-def pruea():
-    for dev in developers:
-        print(dev.nombre)
-    
-    Videojuegos.nombre
-    Videojuegos.lista_devs
-    
-
-pruea()
