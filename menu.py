@@ -111,7 +111,7 @@ def menu():
                                 raise NoValido(100, "el dev ya esta registrado")
                             else:
                                 developers.append(dev)
-
+ 
                         if tipo_de_dev == 2:
                             dev = Productor(cedula, nombre_completo, pais_origen, fecha_de_nac, años_experiencia)
                             if dev in developers:
@@ -280,21 +280,57 @@ def menu():
                                 
             case 4:
                 print("Selecciono realizar consultas")
-                consulta = int(input("10 mejores devs-1; 5 mejores program-2; los 7 viejos-3; devs uruguayos-4"))
+                consulta = int(input("10 mejores devs-1; 5 mejores program-2; los 7 viejos-3; devs uruguayos-4: "))
                 
+
                 match consulta:
 
                     case 1:
-                        pass
+                        devs_consulta=developers.copy()
+                        devs_consulta.sort(reverse=True)
+                        contador = 0
+
+                        dict_consulta={}
+                        for index in range(len(devs_consulta)):
+                            contador += 1
+                            if contador == 11:
+                                break
+                            dict_consulta[index+1] = {"exp" : devs_consulta[index].experiencia, "nombre": devs_consulta[index].name}
+
+
+                        print(dict_consulta)
+
 
                     case 2:
-                        pass
+                        devs_consulta_prog = []
+                        contador_prog = 0
+
+
+                        for devs in developers:
+                            if isinstance(devs, Programador):
+                                devs_consulta_prog.append(devs)
+                        
+                        devs_consulta_prog.sort(reverse=True)
+                        print(devs_consulta_prog)
+                        
+                        dict_consulta_prog={}
+                        for index in range(len(devs_consulta_prog)):
+                            contador_prog += 1
+                            if contador_prog == 6:
+                                break
+                            dict_consulta_prog[index+1] = {"exp" : devs_consulta_prog[index].experiencia, "nombre": devs_consulta_prog[index].name}
+
+
+                        print(dict_consulta_prog)
+
 
                     case 3: 
                         pass
 
                     case 4:
                         pass
+            
+
 
 
             case 5:
