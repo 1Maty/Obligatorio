@@ -1,9 +1,8 @@
 from Entities.desarrolladores import Productor, Programador, Tester, Diseñador
 from Entities.desarrolladores import Desarroladores
-from Entities.competencias import Competencias
 from Entities.videojuegos import Videojuegos
 from Excepciones.NoValido import NoValido
-from datetime import date
+from datetime import date 
 from time import sleep
 
 developers=[]
@@ -35,10 +34,10 @@ def menu():
                     try: 
                         cedula = int(cedula)
 
-                        """
+
                         if len(str(cedula)) != 8:
                             raise ValueError
-                        """
+                        
 
 
                     except ValueError:
@@ -135,7 +134,7 @@ def menu():
 
 
                     except ValueError:
-                        print("tenes q poner un numero")
+                        print("tenes que ingresar un numero")
                         return menu()
 
                 formulario() #reusamos este codigo del practico 9.4
@@ -325,11 +324,56 @@ def menu():
 
 
                     case 3: 
-                        pass
+                        devs_consulta_edad = developers.copy()
+                        edades = []
+                        contadorcito = 0
+                        contador_edad = 0
+                        los_siete = []
+                        
+                        
+                        for dev in devs_consulta_edad:
+                            edades.append(dev.nacimiento)
+
+                        for i in range(len(devs_consulta_edad)):
+                            contadorcito += 1
+                            if contadorcito == 8:
+                                break
+                            a = max(edades)
+                            a = edades.index(a)
+
+                            dev = devs_consulta_edad[a]
+                            los_siete.append(dev)
+                            devs_consulta_edad.remove(dev)
+                        print(los_siete)
+
+                        dict_consulta_edad={}
+                        for index in range(len(los_siete)):
+                            contador_edad += 1
+                            if contador_edad == 8:
+                                break
+                            dict_consulta_edad[index+1] = {"nombre" : los_siete[index].name, "edad": los_siete[index].nacimiento}
+
+
+                        print(dict_consulta_edad)
+
+
 
                     case 4:
-                        pass
-            
+                        contador_juego = 0
+                        maximos_devs = 0
+                        nombre_de_juego = None
+                        
+                        for jueguitos in juegos:
+                            contador_juego = 0
+                            for devs in jueguitos.lista_devs:
+                                if devs.pais == "Uruguay":
+                                    contador_juego += 1
+                            
+                            if contador_juego > maximos_devs:
+                                maximos_devs = contador_juego
+                                nombre_de_juego = jueguitos
+
+                        print(nombre_de_juego.nombre)
 
 
 
