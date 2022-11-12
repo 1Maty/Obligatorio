@@ -158,9 +158,11 @@ def menu():
                 print("Selecciono alta de Videojuego")
                 nombre=input("Ingrese el nombre del juego:")
                 categorias_in=input("Ingrese las categorias del videojuegoo(1: Acción, 2: Aventura, 3: Estrategia, 4: Puzzle, ingresandolo sin comas por ejemplo 123 seria un juego de accion aventura y estrategia:")
-
+                numeros_validos = ["1", "2", "3", "4"]
                 for numeros in categorias_in:
-                    categorias.append(numeros)
+                    if numeros in numeros_validos:
+                        categorias.append(numeros)
+                    
                     
                 while True:
                     cedula_dev=int(input("Ingrese las cedulas completo, cuando haya puesto todas ingrese 0:"))
@@ -187,8 +189,6 @@ def menu():
                     se_pudo = False
 
 
-
-                
 
 
                 diseñadores_valido=roles.count("diseñador")
@@ -256,8 +256,23 @@ def menu():
 
                         puntaje = 0.2*prom_diseñador + 0.12*prom_productor + 0.5*prom_programador + 0.18*prom_tester
 
-                        puntajes.append(round(puntaje, 3)) #hacerle el round
+                        puntajes.append(round(puntaje, 3))
                         nombre_juegos.append(juegos_competencia.nombre)
+
+                        """
+                        for index in range(len(jueguitos_de_competencia)-1):
+                            if juegos[index].puntaje == juegos[index+1].puntaje:
+                                if juegos[index].desarrolladores<juegos[index+1].desarrolladores:
+                                    aux=juegos[index]
+                                    juegos[index]=juegos[index+1]
+                                    juegos[index+1]=aux
+                                elif juegos[index].desarrolladores==juegos[index+1].desarrolladores:
+                                    if juegos[index].nombre<juegos[index+1].nombre:
+                                        aux=juegos[index]
+                                    juegos[index]=juegos[index+1]
+                                    juegos[index+1]=aux
+
+                        """
 
 
                     def encontrar_y_sacar():
