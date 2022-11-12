@@ -62,8 +62,8 @@ def menu():
                         mm = int(mm)
                         yyyy = int(yyyy)
                         
-                        if dd > 0 and dd <= 31 and mm > 0 and mm <= 12 and yyyy <= 2003:
-                            pass
+                        if dd > 0 and dd <= 31 and mm > 0 and mm <= 12 and yyyy >1900 and yyyy < año_actual:
+                            fecha_de_nac = date(int(yyyy), int(mm), int(dd))
 
                     except ValueError:
                             print("tiene q ser dd-mm-yyyy")
@@ -110,6 +110,8 @@ def menu():
                                 raise NoValido(100, "el dev ya esta registrado")
                             else:
                                 developers.append(dev)
+                                print(f"el dev {dev.name} de rol {dev.rol} quedo registrado correctamente")
+                                print("--------------------------------")
  
                         if tipo_de_dev == 2:
                             dev = Productor(cedula, nombre_completo, pais_origen, fecha_de_nac, años_experiencia)
@@ -117,6 +119,8 @@ def menu():
                                 raise NoValido(100, "el dev ya esta registrado")
                             else:
                                 developers.append(dev)
+                                print(f"el dev {dev.name} de rol {dev.rol} quedo registrado correctamente")
+                                print("--------------------------------")
 
                         if tipo_de_dev == 3:
                             dev = Programador(cedula, nombre_completo, pais_origen, fecha_de_nac, años_experiencia)
@@ -124,6 +128,8 @@ def menu():
                                 raise NoValido(100, "el dev ya esta registrado")
                             else:
                                 developers.append(dev)
+                                print(f"el dev {dev.name} de rol {dev.rol} quedo registrado correctamente")
+                                print("--------------------------------")
 
                         if tipo_de_dev == 4:
                             dev = Tester(cedula, nombre_completo, pais_origen, fecha_de_nac, años_experiencia)
@@ -131,6 +137,8 @@ def menu():
                                 raise NoValido(100, "el dev ya esta registrado")
                             else:
                                 developers.append(dev)
+                                print(f"el dev {dev.name} de rol {dev.rol} quedo registrado correctamente")
+                                print("--------------------------------")
 
 
                     except ValueError:
@@ -177,13 +185,9 @@ def menu():
                 else:
                     devs_en_uso=dev_en_uso2
                     se_pudo = False
-                    print(contador_dev_encontrados)
-                    print(contador_dev_que_me_dan)
 
 
-                print(dev_del_juego,categorias)
-                        
-                print(f"los roles son {roles}")
+
                 
 
 
@@ -310,7 +314,7 @@ def menu():
                                 devs_consulta_prog.append(devs)
                         
                         devs_consulta_prog.sort(reverse=True)
-                        print(devs_consulta_prog)
+                        
                         
                         dict_consulta_prog={}
                         for index in range(len(devs_consulta_prog)):
@@ -329,29 +333,18 @@ def menu():
                         contadorcito = 0
                         contador_edad = 0
                         los_siete = []
-                        
-                        
-                        for dev in devs_consulta_edad:
-                            edades.append(dev.nacimiento)
 
-                        for i in range(len(devs_consulta_edad)):
-                            contadorcito += 1
-                            if contadorcito == 8:
-                                break
-                            a = max(edades)
-                            a = edades.index(a)
+                        devs_consulta_edad.sort(key=lambda dev: dev.nacimiento, reverse=False)
+                        print(devs_consulta_edad[0].nacimiento)
 
-                            dev = devs_consulta_edad[a]
-                            los_siete.append(dev)
-                            devs_consulta_edad.remove(dev)
-                        print(los_siete)
 
                         dict_consulta_edad={}
-                        for index in range(len(los_siete)):
+                        for index in range(len(devs_consulta_edad)):
                             contador_edad += 1
+
                             if contador_edad == 8:
                                 break
-                            dict_consulta_edad[index+1] = {"nombre" : los_siete[index].name, "edad": los_siete[index].nacimiento}
+                            dict_consulta_edad[index+1] = {"nombre" : devs_consulta_edad[index].name, "edad": devs_consulta_edad[index].nacimiento}
 
 
                         print(dict_consulta_edad)
@@ -373,9 +366,13 @@ def menu():
                                 maximos_devs = contador_juego
                                 nombre_de_juego = jueguitos
 
-                        print(nombre_de_juego.nombre)
 
 
+                        dict_consulta_uruguayos = {
+                            "nombre":nombre_de_juego.nombre, "cantidad de uruguayos": maximos_devs
+                        }
+ 
+                        print(dict_consulta_uruguayos)
 
             case 5:
                 sleep(0.5)
@@ -387,7 +384,11 @@ def menu():
                 sleep(1)
                 print("hasta la proxima") 
                 sleep(0.5)
-                break  
+                break 
+
+            case cualquier_otra_cosa:
+                print("tiene que ser un numero entre 1 y 5")
+                menu()
             
 
 menu()
