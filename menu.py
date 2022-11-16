@@ -2,7 +2,7 @@ from Entities.desarrolladores import Productor, Programador, Tester, Diseñador
 from Entities.desarrolladores import Desarroladores
 from Entities.videojuegos import Videojuegos
 from Excepciones.NoValido import NoValido
-from datetime import date 
+from datetime import date
 from time import sleep
 
 developers=[]
@@ -26,18 +26,18 @@ def menu():
                     años_experiencia = input("cuantos años de exp tenes: ")
                     tipo_de_dev = input("en q rol trabajas 1-diseñador, 2-productor 3-programador 4-tester \n")
 
-                    
+
                     print("--------------------------------")
 
 
                     #comprobacion de cedula
-                    try: 
+                    try:
                         cedula = int(cedula)
 
 
                         if len(str(cedula)) != 8:
                             raise ValueError
-                        
+
 
 
                     except ValueError:
@@ -61,28 +61,28 @@ def menu():
                         dd = int(dd)
                         mm = int(mm)
                         yyyy = int(yyyy)
-                        
+
                         if dd > 0 and dd <= 31 and mm > 0 and mm <= 12 and yyyy >1900 and yyyy < año_actual:
                             fecha_de_nac = date(int(yyyy), int(mm), int(dd))
 
                     except ValueError:
                             print("tiene q ser dd-mm-yyyy")
                             return menu()
-                            
+
 
                     #comprobacion pais de nacimiento
                     try:
                         pais_origen = str(pais_origen)
                         pais_origen = pais_origen.capitalize()
                         paises = ["Uruguay", "Argentina", "Chile", "Brasil"]
-                        
+
                         if pais_origen not in paises or type(pais_origen) != str:
                                 raise ValueError
 
                     except ValueError:
                         print("escrbiste mal el pais o el mismo no se encuentra dentro de la lista de paises disponibles")
                         return menu()
-                    
+
 
                     #comprobar años de exp
                     try:
@@ -102,7 +102,7 @@ def menu():
 
                     try:
                         tipo_de_dev = int(tipo_de_dev)
-                    
+
 
                         if tipo_de_dev == 1:
                             dev = Diseñador(cedula, nombre_completo, pais_origen, fecha_de_nac, años_experiencia)
@@ -112,7 +112,7 @@ def menu():
                                 developers.append(dev)
                                 print(f"el dev {dev.name} de rol {dev.rol} quedo registrado correctamente")
                                 print("--------------------------------")
- 
+
                         if tipo_de_dev == 2:
                             dev = Productor(cedula, nombre_completo, pais_origen, fecha_de_nac, años_experiencia)
                             if dev in developers:
@@ -162,8 +162,9 @@ def menu():
                 for numeros in categorias_in:
                     if numeros in numeros_validos:
                         categorias.append(numeros)
-                    
-                    
+
+
+
                 while True:
                     cedula_dev=int(input("Ingrese las cedulas completo, cuando haya puesto todas ingrese 0:"))
                     if cedula_dev==0:
@@ -178,7 +179,7 @@ def menu():
                             contador_dev_encontrados += 1
 
                 if contador_dev_que_me_dan == contador_dev_encontrados:
-                    print("todo piola")
+
                     se_pudo = True
                     for devs in dev_del_juego:
                         rol = devs.rol
@@ -199,11 +200,11 @@ def menu():
                 if diseñadores_valido >= 2 and productores_valido >= 1 and programadores_valido >= 3 and tester_valido >= 2 and se_pudo == True:
                     nuevo_juego=Videojuegos(nombre,categorias,dev_del_juego)
                     juegos.append(nuevo_juego)
-                    print(juegos)
+
                 else:
                     print("Las condiciones de roles no se cumplieron")
 
-                                                                     
+
 
             case 3:
                 print("Selecciono simular competencia")
@@ -229,7 +230,7 @@ def menu():
                 else:
                     for juegos_competencia in jueguitos_de_competencia:
                         listas_devs=juegos_competencia.lista_devs
-                    
+
                         for devis in listas_devs:
                             if devis.rol=="diseñador":
                                 diseñadores+=1
@@ -256,31 +257,76 @@ def menu():
 
                         puntaje = 0.2*prom_diseñador + 0.12*prom_productor + 0.5*prom_programador + 0.18*prom_tester
 
-                        puntajes.append(round(puntaje, 3))
-                        nombre_juegos.append(juegos_competencia.nombre)
 
-                        """
-                        for index in range(len(jueguitos_de_competencia)-1):
-                            if juegos[index].puntaje == juegos[index+1].puntaje:
-                                if juegos[index].desarrolladores<juegos[index+1].desarrolladores:
-                                    aux=juegos[index]
-                                    juegos[index]=juegos[index+1]
-                                    juegos[index+1]=aux
-                                elif juegos[index].desarrolladores==juegos[index+1].desarrolladores:
-                                    if juegos[index].nombre<juegos[index+1].nombre:
-                                        aux=juegos[index]
-                                    juegos[index]=juegos[index+1]
-                                    juegos[index+1]=aux
+                        devs_de_juego = diseñadores + productores + testers +programadores
+                        juegos_competencia.desarrolladores = devs_de_juego
+                        juegos_competencia.puntaje = round(puntaje,3)
 
-                        """
+                        #para probar puntajes iguales
+                        juegos_competencia.puntaje = 2
 
+
+                    
+                    jueguitos_de_competencia.sort(reverse=True)
+
+
+                    for index in range(len(jueguitos_de_competencia)-1):
+                        if jueguitos_de_competencia[index].puntaje == jueguitos_de_competencia[index+1].puntaje:
+                            print("entre al PRIMER if")
+
+                            if jueguitos_de_competencia[index].desarrolladores>jueguitos_de_competencia[index+1].desarrolladores:
+                                print("entre al segundo IF")
+
+                                print(jueguitos_de_competencia)
+
+                                print(jueguitos_de_competencia[index])
+                                print(jueguitos_de_competencia[index+1])
+
+                                aux=jueguitos_de_competencia[index]
+                                jueguitos_de_competencia[index]=jueguitos_de_competencia[index+1]
+                                jueguitos_de_competencia[index+1]=aux
+
+                                print(jueguitos_de_competencia[index])
+                                print(jueguitos_de_competencia[index+1])
+
+                                print(jueguitos_de_competencia)
+
+
+                            elif jueguitos_de_competencia[index].desarrolladores==jueguitos_de_competencia[index+1].desarrolladores:
+                                print("entre al ELSE este")
+
+                                if jueguitos_de_competencia[index].nombre>jueguitos_de_competencia[index+1].nombre:
+                                    print("entre al ULTIMO if")
+                                    aux=jueguitos_de_competencia[index]
+                                jueguitos_de_competencia[index]=jueguitos_de_competencia[index+1]
+                                jueguitos_de_competencia[index+1]=aux
+
+
+                    jueguitos_de_competencia[:3]
+
+                    posi = 1
+                    for juego in jueguitos_de_competencia:
+                        print(f"Posicion: {[posi]} Nombre: {juego.nombre} Puntaje: {juego.puntaje} Cantidad de devs: {juego.desarrolladores}")
+                        posi += 1
+
+                    # for index in range(len(jueguitos_de_competencia)):
+                    #     print("Posicion:",index+1, "Nombre:", jueguitos_de_competencia[index].nombre, "Puntaje:", jueguitos_de_competencia[index].puntaje)
+
+
+
+
+                    """
 
                     def encontrar_y_sacar():
+
+
                         posicion = puntajes.index(max(puntajes))
                         primero = [nombre_juegos[posicion], puntajes[posicion]]
                         puntajes.remove(puntajes[posicion])
                         nombre_juegos.remove(nombre_juegos[posicion])
                         return primero
+
+
 
 
                     primero = encontrar_y_sacar()
@@ -293,13 +339,14 @@ def menu():
                     if len(nombre_juegos) != 0:
                         tercero = encontrar_y_sacar()
                         print("El tercero es:",tercero)
+                    """
 
 
-                                
+
             case 4:
                 print("Selecciono realizar consultas")
                 consulta = int(input("10 mejores devs-1; 5 mejores program-2; los 7 viejos-3; devs uruguayos-4: "))
-                
+
 
                 match consulta:
 
@@ -327,10 +374,10 @@ def menu():
                         for devs in developers:
                             if isinstance(devs, Programador):
                                 devs_consulta_prog.append(devs)
-                        
+
                         devs_consulta_prog.sort(reverse=True)
-                        
-                        
+
+
                         dict_consulta_prog={}
                         for index in range(len(devs_consulta_prog)):
                             contador_prog += 1
@@ -342,7 +389,7 @@ def menu():
                         print(dict_consulta_prog)
 
 
-                    case 3: 
+                    case 3:
                         devs_consulta_edad = developers.copy()
                         edades = []
                         contadorcito = 0
@@ -370,13 +417,13 @@ def menu():
                         contador_juego = 0
                         maximos_devs = 0
                         nombre_de_juego = None
-                        
-                        for jueguitos in juegos:
+
+                        for jueguitos in jueguitos_de_competencia:
                             contador_juego = 0
                             for devs in jueguitos.lista_devs:
                                 if devs.pais == "Uruguay":
                                     contador_juego += 1
-                            
+
                             if contador_juego > maximos_devs:
                                 maximos_devs = contador_juego
                                 nombre_de_juego = jueguitos
@@ -386,7 +433,7 @@ def menu():
                         dict_consulta_uruguayos = {
                             "nombre":nombre_de_juego.nombre, "cantidad de uruguayos": maximos_devs
                         }
- 
+
                         print(dict_consulta_uruguayos)
 
             case 5:
@@ -397,14 +444,14 @@ def menu():
                 sleep(1)
                 print("...")
                 sleep(1)
-                print("hasta la proxima") 
+                print("hasta la proxima")
                 sleep(0.5)
-                break 
+                break
 
             case cualquier_otra_cosa:
                 print("tiene que ser un numero entre 1 y 5")
                 menu()
-            
+
 
 menu()
 
